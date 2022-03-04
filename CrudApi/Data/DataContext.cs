@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace CrudApi
+namespace CrudApi.Data
 {
     public class DataContext : DbContext
     {

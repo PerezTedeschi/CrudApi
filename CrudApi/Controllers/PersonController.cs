@@ -1,30 +1,29 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CrudApi.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace CrudApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class PersonController : ControllerBase
-    {
-        private readonly DataContext _dataContext;
+    {        
+        private readonly IPersonService _personService;
 
-        public PersonController(DataContext dataContext)
+        public PersonController(IPersonService personService)
         {
-            _dataContext = dataContext;
+            _personService = personService;
         }   
 
         [HttpGet]
         public async Task<ActionResult<List<Person>>> Get()
         {
-            return Ok(await _dataContext.People.ToListAsync());
+            return Ok(await _personService.GetAllAsync());
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<List<Person>>> Get(int id)
         {
-            var person = await _dataContext.People.FindAsync(id);
+            var person = await _personService.GetAsync(id);
 
             return person is not null ? Ok(person) : NotFound(person);
         }
@@ -32,40 +31,25 @@ namespace CrudApi.Controllers
         [HttpPost]
         public async Task<ActionResult<List<Person>>> Post(Person person)
         {
-            _dataContext.Add(person);
-            await _dataContext.SaveChangesAsync();
+            await _personService.CreatAsync(person);
 
-            return Ok(await _dataContext.People.ToListAsync());
+            return Ok(await _personService.GetAllAsync());
         }
 
         [HttpPut]
-        public async Task<ActionResult<List<Person>>> Put(Person request)
+        public async Task<ActionResult<List<Person>>> Put(Person person)
         {
-            var person = await _dataContext.People.FindAsync(request.Id);
+            await _personService.UpdateAsync(person);
 
-            if (person is null) return NotFound(person);
-
-            person.Name = request.Name;
-            person.FirstName = request.FirstName;
-            person.LastName = request.LastName;
-            person.Place = request.Place;
-
-            await _dataContext.SaveChangesAsync();
-
-            return Ok(await _dataContext.People.ToListAsync());
+            return Ok(await _personService.GetAllAsync());
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<List<Person>>> Delete(int id)
         {
-            var person = await _dataContext.People.FindAsync(id);
+            await _personService.DeleteAsync(id);
 
-            if (person is null) return NotFound(person);
-
-            _dataContext.Remove(person);
-            await _dataContext.SaveChangesAsync();
-
-            return Ok(await _dataContext.People.ToListAsync());
+            return Ok(await _personService.GetAllAsync());
         }
     }
 }
