@@ -1,4 +1,5 @@
-﻿
+﻿using CrudApi.Models;
+
 namespace CrudApi.Services
 {
     public interface IPersonService

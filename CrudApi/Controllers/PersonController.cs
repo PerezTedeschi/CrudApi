@@ -1,4 +1,5 @@
-﻿using CrudApi.Services;
+﻿using CrudApi.Models;
+using CrudApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CrudApi.Controllers

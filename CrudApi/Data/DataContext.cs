@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CrudApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CrudApi.Data
 {

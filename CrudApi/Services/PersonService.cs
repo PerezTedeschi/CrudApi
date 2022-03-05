@@ -1,5 +1,6 @@
 ﻿using CrudApi.Data;
 using CrudApi.Exceptions;
+using CrudApi.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CrudApi.Services

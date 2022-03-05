@@ -1,4 +1,4 @@
-﻿namespace CrudApi
+﻿namespace CrudApi.Models
 {
     public class Person
     {
